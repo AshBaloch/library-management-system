@@ -4,6 +4,8 @@ const {
   customers,
   revenue,
   users,
+  categories,
+  books,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
@@ -85,6 +87,47 @@ async function seedInvoices(client) {
     throw error;
   }
 }
+async function seedBooks(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "books" table if it doesn't exist
+    const createTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS books (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    category_id UUID NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    registration_no VARCHAR(255) NOT NULL,
+    publish_date VARCHAR(255) NOT NULL,
+    total_quantity INT NOT NULL
+  );
+`;
+
+    console.log(`Created "Books" table`);
+
+    // Insert data into the "Books" table
+    const insertedBooks = await Promise.all(
+      books.map(
+        (book) => client.sql`
+        INSERT INTO books (category_id, title, author, registration_no, publish_date, total_quantity)
+        VALUES (${book.category_id}, ${book.title}, ${book.author}, ${book.registration_no}, ${book.publish_date}, ${book.total_quantity})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedBooks.length} books`);
+
+    return {
+      createTable,
+      books: insertedBooks,
+    };
+  } catch (error) {
+    console.error('Error seeding books:', error);
+    throw error;
+  }
+}
 
 async function seedCustomers(client) {
   try {
@@ -121,6 +164,43 @@ async function seedCustomers(client) {
     };
   } catch (error) {
     console.error('Error seeding customers:', error);
+    throw error;
+  }
+}
+
+async function seedCategories(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "categories" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS categories (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        category_title VARCHAR(255) NOT NULL
+      );
+    `;
+
+    console.log(`Created "categories" table`);
+
+    // Insert data into the "categories" table
+    const insertedCategories = await Promise.all(
+      categories.map(
+        (category) => client.sql`
+        INSERT INTO categories (id, category_title)
+        VALUES (${category.id}, ${category.category_title})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedCategories.length} categories`);
+
+    return {
+      createTable,
+      categories: insertedCategories,
+    };
+  } catch (error) {
+    console.error('Error seeding categories:', error);
     throw error;
   }
 }
@@ -163,6 +243,8 @@ async function seedRevenue(client) {
 async function main() {
   const client = await db.connect();
 
+  await seedBooks(client);
+  await seedCategories(client);
   await seedUsers(client);
   await seedCustomers(client);
   await seedInvoices(client);

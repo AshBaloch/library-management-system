@@ -14,6 +14,28 @@ const users = [
     password: 'asif@1234',
   },
 ];
+const categories = [
+  {
+    id: '410544b2-4003-4271-9855-fec4b6c6442b',
+    category_title: 'Computer Science',
+  },
+  {
+    id: '410544b2-40c1-4271-9835-fec4b6a6442b',
+    category_title: 'Botany',
+  },
+];
+
+const books = [
+  {
+    id: '410544b2-4003-4271-9898-fec4b6c6442b',
+    category_id: '410544b2-40c1-4271-9835-fec4b6a6442b',
+    title: 'My BOok',
+    author: 'Osama',
+    registration_no: '85AF96',
+    publish_date: '2022-06-05',
+    total_quantity: 12,
+  },
+];
 
 const customers = [
   {
@@ -191,4 +213,6 @@ module.exports = {
   customers,
   invoices,
   revenue,
+  categories,
+  books,
 };

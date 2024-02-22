@@ -86,3 +86,21 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type CategoryForm = {
+  id: string;
+  category_title: string;
+};
+export interface BookFormTable {
+  id: string;
+  category_id: string;
+  title: string;
+  author: string;
+  registration_no: string;
+  publish_date: string;
+  total_quantity: number;
+}
+
+export interface BookTable extends BookFormTable {
+  category_title: string;
+}

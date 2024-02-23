@@ -175,13 +175,13 @@ export async function createBook(prevState: BookState, formData: FormData) {
 
   try {
     await sql`
-    INSERT INTO books (category_id, title, author, registration_no, publish_date, total_quantity)
-    VALUES (${category_id}, ${title}, ${author}, ${registration_no}, ${publish_date}, ${total_quantity})
+    INSERT INTO books (category_id, title, author, registration_no, publish_date, total_quantity, available_quantity)
+    VALUES (${category_id}, ${title}, ${author}, ${registration_no}, ${publish_date}, ${total_quantity}, ${total_quantity})
     ON CONFLICT (id) DO NOTHING;
       `;
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Create Category.',
+      message: 'Database Error: Failed to Create Book.',
     };
   }
 

@@ -1,6 +1,10 @@
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  CheckIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteInvoice } from '@/app/lib/actions';
 
 export function CreateButton({
   title = 'create',
@@ -25,6 +29,23 @@ export function UpdateButton({ href }: { href: string }) {
     <Link href={href} className="rounded-md border p-2 hover:bg-gray-100">
       <PencilIcon className="w-5" />
     </Link>
+  );
+}
+
+export function ReturnBookButton({
+  returnBookAction,
+}: {
+  returnBookAction: () => Promise<{
+    message: string;
+  }>;
+}) {
+  return (
+    <form action={returnBookAction}>
+      <button className="flex cursor-pointer rounded-lg border bg-blue-600 p-2 hover:bg-blue-400">
+        <span className="text-sm text-white">Return</span>
+        <CheckIcon className="ml-1 w-5 text-white" />
+      </button>
+    </form>
   );
 }
 

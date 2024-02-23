@@ -28,12 +28,197 @@ const categories = [
 const books = [
   {
     id: '410544b2-4003-4271-9898-fec4b6c6442b',
-    category_id: '410544b2-40c1-4271-9835-fec4b6a6442b',
-    title: 'My BOok',
+    category_id: categories[0].id,
+    title: 'New Book',
     author: 'Osama',
     registration_no: '85AF96',
     publish_date: '2022-06-05',
     total_quantity: 12,
+  },
+  {
+    id: '440544b2-4003-4271-9898-fec4b6c6442b',
+    category_id: categories[1].id,
+    title: 'My BOok',
+    author: 'Osama',
+    registration_no: '85AF96',
+    publish_date: '2022-06-05',
+    total_quantity: 10,
+  },
+  {
+    id: '420544b2-4003-4271-9898-fec4b6c6442b',
+    category_id: categories[0].id,
+    title: 'Book Three',
+    author: 'Jamal',
+    registration_no: '85AF96',
+    publish_date: '2022-06-05',
+    total_quantity: 6,
+  },
+];
+
+const semesters = [
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a1',
+    title: '1st Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a2',
+    title: '2nd Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a3',
+    title: '3rd Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a4',
+    title: '4th Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a5',
+    title: '5th Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a6',
+    title: '6th Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a7',
+    title: '7th Semester',
+  },
+  {
+    id: '4105004a-4005-4271-9898-fec4b6c644a8',
+    title: '8th Semester',
+  },
+];
+
+const programs = [
+  {
+    id: '4105004a-4004-4271-9898-fec4b6c644d1',
+    title: 'BS 4 years',
+  },
+  {
+    id: '4105004a-4004-4271-9898-fec4b6c644d2',
+    title: '2.5 years',
+  },
+  {
+    id: '4105004a-4004-4271-9898-fec4b6c644d3',
+    title: '2.0 years',
+  },
+  {
+    id: '4105004a-4004-4271-9898-fec4b6c644d4',
+    title: '1.5 years',
+  },
+];
+
+const departments = [
+  {
+    id: '4105004a-4003-4271-9898-fec4b6c644d1',
+    title: 'Computer Science',
+  },
+  {
+    id: '4105004a-4003-4271-9898-fec4b6c644d2',
+    title: 'English',
+  },
+  {
+    id: '4105004a-4003-4271-9898-fec4b6c644d3',
+    title: 'Education',
+  },
+  {
+    id: '4105004a-4003-4271-9898-fec4b6c644d4',
+    title: 'Botany',
+  },
+];
+
+const students = [
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6741a',
+    name: 'Aslam Hassan',
+    fathers_name: 'jamal Jan',
+    cnic_no: '5230169864527',
+    email: 'assif@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6742a',
+    name: 'Jabbar',
+    fathers_name: 'Shoku',
+    cnic_no: '5230169864522',
+    email: 'afsif@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6743a',
+    name: 'ulfat',
+    fathers_name: 'yaseen',
+    cnic_no: '5230169874527',
+    email: 'asisdff@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6744a',
+    name: 'salman ',
+    fathers_name: 'Salim Jan',
+    cnic_no: '5230119864527',
+    email: 'atrsif@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6745a',
+    name: 'Samandar',
+    fathers_name: 'Mousam',
+    cnic_no: '5230169814527',
+    email: 'asi45f@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6746a',
+    name: 'Jabir',
+    fathers_name: 'Ghafoor',
+    cnic_no: '5230169844527',
+    email: 'astrif@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
+  },
+  {
+    id: '3958dc9e-752f-4377-85e9-fec4b6a6747a',
+    name: 'Jameel',
+    fathers_name: 'Shaqoor',
+    cnic_no: '5230169866527',
+    email: 'asiuiof@gmail.com',
+    address: 'tasp panjgur',
+    contact: '03342386199',
+    gender: 'MALE',
+    department_id: departments[2].id,
+    program_id: programs[2].id,
+    semester_id: semesters[3].id,
   },
 ];
 
@@ -97,6 +282,13 @@ const customers = [
     name: 'Balazs Orban',
     email: 'balazs@orban.com',
     image_url: '/customers/balazs-orban.png',
+  },
+];
+
+const book_transactions = [
+  {
+    student_id: students[1].id,
+    book_id: '278c377e-d263-482c-9f56-3e4cb488228b',
   },
 ];
 
@@ -215,4 +407,9 @@ module.exports = {
   revenue,
   categories,
   books,
+  departments,
+  semesters,
+  programs,
+  students,
+  book_transactions,
 };

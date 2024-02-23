@@ -1,9 +1,9 @@
-import Form from '@/app/ui/books/create-category-form';
+import Form from '@/app/ui/students/create-department-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Create Category',
+  title: 'Create Department',
 };
 
 export default async function Page() {
@@ -11,11 +11,11 @@ export default async function Page() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Books', href: '/dashboard/books' },
-          { label: 'Categories', href: '/dashboard/books/category' },
+          { label: 'Students', href: '/dashboard/students' },
+          { label: 'Departments', href: '/dashboard/students/departments' },
           {
-            label: 'Create Category',
-            href: '/dashboard/books/category/create',
+            label: 'Add Department',
+            href: '/dashboard/students/departments/create',
             active: true,
           },
         ]}

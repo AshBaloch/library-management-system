@@ -8,109 +8,143 @@ import { AuthError } from 'next-auth';
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
+  student_id: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
+  book_id: z.string({
+    invalid_type_error: 'Please select a Book.',
   }),
-  date: z.string(),
+  issue_date: z.string(),
+  return_date: z.string(),
+  is_returned: z.boolean(),
 });
 
 export type State = {
   errors?: {
-    customerId?: string[];
-    amount?: string[];
-    status?: string[];
+    student_id?: string[];
+    book_id?: string[];
   };
   message?: string | null;
 };
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const IssueBook = FormSchema.omit({
+  id: true,
+  issue_date: true,
+  return_date: true,
+  is_returned: true,
+});
 
-export async function createInvoice(prevState: State, formData: FormData) {
-  const validatedFields = CreateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+export async function issueBook(prevState: State, formData: FormData) {
+  const validatedFields = IssueBook.safeParse({
+    student_id: formData.get('student'),
+    book_id: formData.get('book'),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Issue Book.',
     };
   }
 
   // Prepare data for insertion into the database
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
+  const { book_id, student_id } = validatedFields.data;
 
   try {
+    try {
+      await sql`UPDATE books
+      SET available_quantity = available_quantity - 1
+      WHERE id = ${book_id};`;
+    } catch (error) {
+      return {
+        message: 'Book Not Available',
+      };
+    }
+
     await sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    INSERT INTO book_transactions (student_id, book_id)
+    VALUES (${student_id}, ${book_id})
+    ON CONFLICT (id) DO NOTHING;
       `;
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'Database Error: Failed to Issue Book.',
     };
   }
 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/book-transactions');
+  redirect('/dashboard/book-transactions');
 }
 
 // Use Zod to update the expected types
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateBookTransaction = FormSchema.omit({
+  id: true,
+  issue_date: true,
+  return_date: true,
+  is_returned: true,
+});
 
-export async function updateInvoice(
+export async function updateBookTransaction(
   id: string,
   prevState: State,
   formData: FormData,
 ) {
-  const validatedFields = UpdateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+  const validatedFields = UpdateBookTransaction.safeParse({
+    student_id: formData.get('student'),
+    book_id: formData.get('book'),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Issue Book.',
     };
   }
 
   // Prepare data for insertion into the database
-  const { customerId, amount, status } = validatedFields.data;
-
-  const amountInCents = amount * 100;
+  const { book_id, student_id } = validatedFields.data;
 
   try {
     await sql`
-          UPDATE invoices
-          SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+          UPDATE book_transactions
+          SET student_id = ${student_id}, book_id = ${book_id}
           WHERE id = ${id}
         `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'Database Error: Failed to Update Transaction.' };
   }
 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/book-transactions');
+  redirect('/dashboard/book-transactions');
 }
 
-export async function deleteInvoice(id: string) {
+export async function returnBookTransaction(id: string, book_id: string) {
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
+    await sql`
+      UPDATE book_transactions
+      SET return_date = CURRENT_TIMESTAMP, is_returned = TRUE 
+      WHERE id = ${id}
+        `;
+    await sql`UPDATE books
+      SET available_quantity = available_quantity + 1
+      WHERE id = ${book_id};`;
+
+    revalidatePath('/dashboard/book-transactions');
+    return { message: 'Deleted Invoice.' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Invoice.' };
+  }
+}
+
+export async function deleteBookTransaction(id: string, book_id: string) {
+  try {
+    await sql`DELETE FROM book_transactions WHERE id = ${id}`;
+    await sql`UPDATE books
+      SET available_quantity = available_quantity + 1
+      WHERE id = ${book_id};`;
+    revalidatePath('/dashboard/book-transactions');
     return { message: 'Deleted Invoice.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Invoice.' };

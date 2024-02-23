@@ -55,6 +55,17 @@ export type InvoicesTable = {
   status: 'pending' | 'paid';
 };
 
+export type TransactionsTable = {
+  id: string;
+  issue_date: string;
+  return_date: string;
+  is_returned: boolean;
+  name: string;
+  title: string;
+  book_id: string;
+  department_title: number;
+};
+
 export type CustomersTableType = {
   id: string;
   name: string;
@@ -80,6 +91,29 @@ export type CustomerField = {
   name: string;
 };
 
+export type StudentField = {
+  id: string;
+  name: string;
+  fathers_name: string;
+  department_title: string;
+  program_title: string;
+  semester_title: string;
+};
+
+export type BookField = {
+  id: string;
+  title: string;
+  author: string;
+  total_quantity: string;
+  category_title: string;
+};
+
+export type TransactionForm = {
+  id: string;
+  student_id: string;
+  book_id: number;
+};
+
 export type InvoiceForm = {
   id: string;
   customer_id: string;
@@ -90,6 +124,18 @@ export type InvoiceForm = {
 export type CategoryForm = {
   id: string;
   category_title: string;
+};
+export type DepartmentForm = {
+  id: string;
+  title: string;
+};
+export type SemesterForm = {
+  id: string;
+  title: string;
+};
+export type ProgramForm = {
+  id: string;
+  title: string;
 };
 export interface BookFormTable {
   id: string;
@@ -103,4 +149,23 @@ export interface BookFormTable {
 
 export interface BookTable extends BookFormTable {
   category_title: string;
+}
+
+export interface StudentFormTable {
+  id: string;
+  name: string;
+  fathers_name: string;
+  cnic_no: string;
+  email: string;
+  address: string;
+  contact: string;
+  gender: string;
+  department_id: string;
+  program_id: string;
+  semester_id: string;
+}
+export interface StudentTable extends StudentFormTable {
+  department_title: string;
+  program_title: string;
+  semester_title: string;
 }

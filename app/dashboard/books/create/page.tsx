@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { fetchCategories } from '@/app/lib/book-data';
 
 export const metadata: Metadata = {
-  title: 'Create Invoice',
+  title: 'Create Book',
 };
 
 export default async function Page() {
@@ -16,7 +16,7 @@ export default async function Page() {
         breadcrumbs={[
           { label: 'Books', href: '/dashboard/books' },
           {
-            label: 'Add Book',
+            label: 'Create Book',
             href: '/dashboard/books/create',
             active: true,
           },

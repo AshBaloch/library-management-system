@@ -3,6 +3,9 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { fetchStudents } from '@/app/lib/student-data';
+import { fetchBooks } from '@/app/lib/book-data';
+import { fetchTransactionById } from '@/app/lib/transactions-data';
 
 export const metadata: Metadata = {
   title: 'Edit Invoice',
@@ -10,12 +13,13 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [transaction, students, books] = await Promise.all([
+    fetchTransactionById(id),
+    fetchStudents(),
+    fetchBooks(),
   ]);
 
-  if (!invoice) {
+  if (!transaction) {
     notFound();
   }
 
@@ -23,15 +27,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: 'Invoices', href: '/dashboard/book-transactions' },
           {
             label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
+            href: `/dashboard/book-transactions/${id}/edit`,
             active: true,
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form transaction={transaction} students={students} books={books} />
     </main>
   );
 }

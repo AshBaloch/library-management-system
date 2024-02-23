@@ -6,9 +6,11 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
   id: z.string(),
-  category_title: z.string({
-    invalid_type_error: 'Please Enter a Category.',
-  }),
+  category_title: z
+    .string({
+      invalid_type_error: 'Please Enter a Category.',
+    })
+    .min(4, { message: 'Please Enter a Category' }),
 });
 
 export type State = {
@@ -47,8 +49,8 @@ export async function createCategory(prevState: State, formData: FormData) {
     };
   }
 
-  revalidatePath('/dashboard/books/create');
-  redirect('/dashboard/books/create');
+  revalidatePath('/dashboard/books/category');
+  redirect('/dashboard/books/category');
 }
 
 // Use Zod to update the expected types
@@ -171,12 +173,10 @@ export async function createBook(prevState: BookState, formData: FormData) {
     total_quantity,
   } = validatedFields.data;
 
-  const now = new Date().toISOString();
-
   try {
     await sql`
-    INSERT INTO books (category_id, title, author, registration_no, publish_date, total_quantity, date)
-    VALUES (${category_id}, ${title}, ${author}, ${registration_no}, ${publish_date}, ${total_quantity}, ${now})
+    INSERT INTO books (category_id, title, author, registration_no, publish_date, total_quantity)
+    VALUES (${category_id}, ${title}, ${author}, ${registration_no}, ${publish_date}, ${total_quantity})
     ON CONFLICT (id) DO NOTHING;
       `;
   } catch (error) {

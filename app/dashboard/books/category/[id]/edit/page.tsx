@@ -20,6 +20,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
+          { label: 'Books', href: '/dashboard/books' },
           { label: 'Categories', href: '/dashboard/books/category' },
           {
             label: 'Edit Book',

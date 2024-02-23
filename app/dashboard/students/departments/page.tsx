@@ -1,16 +1,16 @@
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/books/category-table';
+import Table from '@/app/ui/students/department-table';
 import { CreateButton } from '@/app/ui/invoices/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { fetchCategoriesPages } from '@/app/lib/book-data';
+import { fetchDepartmentsPages } from '@/app/lib/student-data';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'Categories',
+  title: 'Departments',
 };
 
 export default async function Page({
@@ -24,25 +24,25 @@ export default async function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await fetchCategoriesPages(query);
+  const totalPages = await fetchDepartmentsPages(query);
 
   return (
     <div className="w-full">
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Books', href: '/dashboard/books' },
+          { label: 'Students', href: '/dashboard/students' },
           {
-            label: 'Categories',
-            href: '/dashboard/books/category',
+            label: 'Departments',
+            href: '/dashboard/students/departments',
             active: true,
           },
         ]}
       />
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search Categories..." />
+        <Search placeholder="Search departments..." />
         <CreateButton
-          title="Create Category"
-          href="/dashboard/books/category/create"
+          title="Create Department"
+          href="/dashboard/students/departments/create"
         />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>

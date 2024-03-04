@@ -1,11 +1,10 @@
-import Image from 'next/image';
 import {
   UpdateButton,
   DeleteContent,
   ReturnBookButton,
-} from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+} from '@/app/ui/transactions/buttons';
+import InvoiceStatus from '@/app/ui/transactions/status';
+import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredTransactions } from '@/app/lib/transactions-data';
 import {
   deleteBookTransaction,
@@ -26,28 +25,25 @@ export default async function InvoicesTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            {book_transactions?.map((transaction) => (
-              <div
-                key={transaction.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
+            {book_transactions?.map((transaction, index) => (
+              <div key={index} className="mb-2 w-full rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{transaction.name}</p>
+                      <p className="text-sm">{transaction.name}</p>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-xs text-gray-600">
                       {transaction.department_title}
                     </p>
                   </div>
-                  <div className="flex items-center text-lg">
+                  <div className="flex items-center text-center text-xs">
                     <p>{transaction.title}</p>
                   </div>
                   <InvoiceStatus status={transaction.is_returned} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className=" font-medium">
+                    <p className=" text-xs font-medium">
                       Issued: {formatDateToLocal(transaction.issue_date)}
                     </p>
                   </div>
@@ -59,6 +55,7 @@ export default async function InvoicesTable({
                             null,
                             transaction.id,
                             transaction.book_id,
+                            transaction.student_id,
                           )}
                         />
                         <UpdateButton
@@ -74,7 +71,7 @@ export default async function InvoicesTable({
                         />
                       </>
                     ) : (
-                      <p className=" font-medium">
+                      <p className=" text-xs font-medium">
                         Returned: {formatDateToLocal(transaction.return_date)}
                       </p>
                     )}
@@ -95,17 +92,20 @@ export default async function InvoicesTable({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Book Title
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 text-center font-medium">
                   Issue Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 text-center font-medium">
                   Return Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 text-center font-medium">
                   Status
                 </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Actions</span>
+                <th
+                  scope="col"
+                  className="py-3 pl-6 pr-3 text-center font-medium"
+                >
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -126,15 +126,15 @@ export default async function InvoicesTable({
                   <td className="whitespace-nowrap px-3 py-3">
                     {transaction.title}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 text-center">
                     {formatDateToLocal(transaction.issue_date)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 text-center">
                     {transaction.return_date
                       ? formatDateToLocal(transaction.return_date)
-                      : '-'}
+                      : '---'}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 text-center">
                     <InvoiceStatus status={transaction.is_returned} />
                   </td>
                   <td className="whitespace-nowrap py-3 pl-3 pr-3">
@@ -146,6 +146,7 @@ export default async function InvoicesTable({
                               null,
                               transaction.id,
                               transaction.book_id,
+                              transaction.student_id,
                             )}
                           />
                           <UpdateButton

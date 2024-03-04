@@ -1,9 +1,9 @@
-import Pagination from '@/app/ui/invoices/pagination';
+import Pagination from '@/app/ui/transactions/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/books/table';
-import { CreateButton } from '@/app/ui/invoices/buttons';
+import { CreateButton } from '@/app/ui/transactions/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { BooksTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { fetchBooksPages } from '@/app/lib/book-data';
@@ -34,7 +34,7 @@ export default async function Page({
         <Search placeholder="Search books..." />
         <CreateButton title="Add Book" href="/dashboard/books/create" />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<BooksTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
 

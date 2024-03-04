@@ -1,9 +1,9 @@
-import Pagination from '@/app/ui/invoices/pagination';
+import Pagination from '@/app/ui/transactions/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/students/table';
-import { CreateButton } from '@/app/ui/invoices/buttons';
+import { CreateButton } from '@/app/ui/transactions/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { StudentsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { fetchStudentsPages } from '@/app/lib/student-data';
@@ -37,7 +37,7 @@ export default async function Page({
           href="/dashboard/students/create"
         />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<StudentsTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
 

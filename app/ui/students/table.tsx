@@ -1,8 +1,6 @@
-import Image from 'next/image';
-import { UpdateButton, DeleteContent } from '@/app/ui/invoices/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { UpdateButton, DeleteContent } from '@/app/ui/transactions/buttons';
 import { fetchFilteredStudents } from '@/app/lib/student-data';
-import { deleteDepartment } from '@/app/lib/students-actions';
+import { deleteDepartment, deleteStudent } from '@/app/lib/students-actions';
 
 export default async function BooksTable({
   query,
@@ -105,7 +103,7 @@ export default async function BooksTable({
                         href={`/dashboard/students/${student.id}/edit`}
                       />
                       <DeleteContent
-                        deleteAction={deleteDepartment.bind(null, student.id)}
+                        deleteAction={deleteStudent.bind(null, student.id)}
                       />
                     </div>
                   </td>

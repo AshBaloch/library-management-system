@@ -1,6 +1,4 @@
-import Image from 'next/image';
-import { UpdateButton, DeleteContent } from '@/app/ui/invoices/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { UpdateButton, DeleteContent } from '@/app/ui/transactions/buttons';
 import { fetchFilteredDepartments } from '@/app/lib/student-data';
 import { deleteDepartment } from '@/app/lib/students-actions';
 

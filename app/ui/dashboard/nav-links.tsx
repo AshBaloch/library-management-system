@@ -19,7 +19,6 @@ const links = [
     href: '/dashboard/book-transactions',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
   { name: 'Books', href: '/dashboard/books', icon: BookOpenIcon },
   { name: 'Students', href: '/dashboard/students', icon: UserGroupIcon },
 ];

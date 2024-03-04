@@ -1,6 +1,6 @@
 'use client';
 
-import { DepartmentForm, CustomerField } from '@/app/lib/definitions';
+import { DepartmentForm } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
@@ -14,7 +14,7 @@ export default function Form({ department }: { department: DepartmentForm }) {
   const [state, dispatch] = useFormState(updateDepartmentWithId, initialState);
 
   return (
-    <form action={dispatch}>
+    <form action={dispatch} id="edit-department-id" name="edit-department">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Department Title */}
         <div className="mb-4">

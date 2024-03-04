@@ -4,7 +4,6 @@ import {
   BookFormTable,
   BookTable,
   CategoryForm,
-  InvoicesTable,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -22,7 +21,7 @@ export async function fetchFilteredBooks(query: string, currentPage: number) {
         books.author,
         books.registration_no,
         books.publish_date,
-        books.total_quantity,
+        books.available_quantity,
         categories.category_title
       FROM books
       JOIN categories ON books.category_id = categories.id
@@ -30,7 +29,7 @@ export async function fetchFilteredBooks(query: string, currentPage: number) {
         categories.category_title ILIKE ${`%${query}%`} OR
         books.title::text ILIKE ${`%${query}%`} OR
         books.author::text ILIKE ${`%${query}%`} OR
-        books.total_quantity::text ILIKE ${`%${query}%`} OR
+        books.available_quantity::text ILIKE ${`%${query}%`} OR
         books.registration_no ILIKE ${`%${query}%`}
       ORDER BY books.title ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
@@ -101,7 +100,7 @@ export async function fetchBooks() {
     books.id,
     books.title,
     books.author,
-    books.total_quantity,
+    books.available_quantity,
     categories.category_title
   FROM books
   JOIN categories ON books.category_id = categories.id

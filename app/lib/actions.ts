@@ -9,7 +9,7 @@ import { AuthError } from 'next-auth';
 const FormSchema = z.object({
   id: z.string(),
   student_id: z.string({
-    invalid_type_error: 'Please select a customer.',
+    invalid_type_error: 'Please select a Student.',
   }),
   book_id: z.string({
     invalid_type_error: 'Please select a Book.',
@@ -61,6 +61,15 @@ export async function issueBook(prevState: State, formData: FormData) {
         message: 'Book Not Available',
       };
     }
+    try {
+      await sql`UPDATE students
+      SET is_issued = true
+      WHERE id = ${student_id};`;
+    } catch (error) {
+      return {
+        message: 'Failed to Issue Book',
+      };
+    }
 
     await sql`
     INSERT INTO book_transactions (student_id, book_id)
@@ -99,7 +108,7 @@ export async function updateBookTransaction(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Issue Book.',
+      message: 'Missing Fields. Failed to Update Book.',
     };
   }
 
@@ -107,12 +116,53 @@ export async function updateBookTransaction(
   const { book_id, student_id } = validatedFields.data;
 
   try {
+    // Start a transaction
+    const prevData = await sql`
+        SELECT student_id, book_id
+        FROM book_transactions
+        WHERE id = ${id}
+      `;
+
+    const bookId = prevData.rows[0].book_id;
+
+    console.log('prev data', bookId);
+
+    await sql`UPDATE books
+      SET available_quantity = available_quantity + 1
+      WHERE id = ${bookId};`;
+
+    // // Set is_issued to false for the returned student
     await sql`
-          UPDATE book_transactions
-          SET student_id = ${student_id}, book_id = ${book_id}
-          WHERE id = ${id}
-        `;
+        UPDATE students
+        SET is_issued = false
+        WHERE id = ${prevData.rows[0].student_id}
+      `;
+
+    // // Update available_quantity for the newly issued book
+    await sql`
+        UPDATE books
+        SET available_quantity = available_quantity - 1
+        WHERE id = ${book_id}
+      `;
+
+    // // Set is_issued to true for the newly issued student
+    await sql`
+        UPDATE students
+        SET is_issued = true
+        WHERE id = ${student_id}
+      `;
+
+    // // Update the book_transaction record
+    await sql`
+        UPDATE book_transactions
+        SET student_id = ${student_id}, book_id = ${book_id}
+        WHERE id = ${id}
+      `;
   } catch (error) {
+    // Log the error details
+    console.error('Error updating transaction:', error);
+
+    // Return a specific error message
     return { message: 'Database Error: Failed to Update Transaction.' };
   }
 
@@ -120,7 +170,11 @@ export async function updateBookTransaction(
   redirect('/dashboard/book-transactions');
 }
 
-export async function returnBookTransaction(id: string, book_id: string) {
+export async function returnBookTransaction(
+  id: string,
+  book_id: string,
+  student_id: string,
+) {
   try {
     await sql`
       UPDATE book_transactions
@@ -130,6 +184,10 @@ export async function returnBookTransaction(id: string, book_id: string) {
     await sql`UPDATE books
       SET available_quantity = available_quantity + 1
       WHERE id = ${book_id};`;
+
+    await sql`UPDATE students
+      SET is_issued = false
+      WHERE id = ${student_id};`;
 
     revalidatePath('/dashboard/book-transactions');
     return { message: 'Deleted Invoice.' };

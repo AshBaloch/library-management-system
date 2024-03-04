@@ -1,5 +1,5 @@
 import Form from '@/app/ui/books/edit-category-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { fetchCategoryById } from '@/app/lib/book-data';

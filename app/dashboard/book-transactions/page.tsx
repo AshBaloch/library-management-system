@@ -1,9 +1,9 @@
-import Pagination from '@/app/ui/invoices/pagination';
+import Pagination from '@/app/ui/transactions/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
-import { CreateButton } from '@/app/ui/invoices/buttons';
+import Table from '@/app/ui/transactions/table';
+import { CreateButton } from '@/app/ui/transactions/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { BooksTransactionTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchTransactionsPages } from '@/app/lib/transactions-data';
 import { Metadata } from 'next';
@@ -37,7 +37,10 @@ export default async function Page({
           href="/dashboard/book-transactions/create"
         />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense
+        key={query + currentPage}
+        fallback={<BooksTransactionTableSkeleton />}
+      >
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">

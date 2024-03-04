@@ -1,5 +1,5 @@
 import Form from '@/app/ui/books/create-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 import { Metadata } from 'next';
 import { fetchCategories } from '@/app/lib/book-data';
 

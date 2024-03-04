@@ -1,3 +1,4 @@
+'use client';
 import {
   CheckIcon,
   PencilIcon,
@@ -40,9 +41,9 @@ export function ReturnBookButton({
   }>;
 }) {
   return (
-    <form action={returnBookAction}>
+    <form action={returnBookAction} id="return-book-id" name="return-book">
       <button className="flex cursor-pointer rounded-lg border bg-blue-600 p-2 hover:bg-blue-400">
-        <span className="text-sm text-white">Return</span>
+        <span className="text-sm text-white ">Return</span>
         <CheckIcon className="ml-1 w-5 text-white" />
       </button>
     </form>
@@ -56,12 +57,29 @@ export function DeleteContent({
     message: string;
   }>;
 }) {
+  const handleDelete = async () => {
+    const result = await deleteAction();
+    alert(result.message);
+  };
+
   return (
-    <form action={deleteAction}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-4" />
-      </button>
-    </form>
+    <div>
+      <form
+        id="delete-content-id"
+        name="delete-content"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleDelete();
+        }}
+      >
+        <button
+          type="submit"
+          className="rounded-md border p-2 hover:bg-gray-100"
+        >
+          <span className="sr-only">Delete</span>
+          <TrashIcon className="w-4" />
+        </button>
+      </form>
+    </div>
   );
 }

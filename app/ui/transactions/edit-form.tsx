@@ -2,8 +2,6 @@
 
 import {
   BookField,
-  CustomerField,
-  InvoiceForm,
   StudentField,
   TransactionForm,
 } from '@/app/lib/definitions';
@@ -18,7 +16,7 @@ import { Button } from '@/app/ui/button';
 import { updateBookTransaction } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
-export default function EditInvoiceForm({
+export default function EditBookTransactionForm({
   transaction,
   students,
   books,
@@ -28,12 +26,22 @@ export default function EditInvoiceForm({
   books: BookField[];
 }) {
   const initialState = { message: null, errors: {} };
-  const updateInvoiceWithId = updateBookTransaction.bind(null, transaction.id);
+  const updateBookTransactionWithId = updateBookTransaction.bind(
+    null,
+    transaction.id,
+  );
 
-  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
+  const [state, dispatch] = useFormState(
+    updateBookTransactionWithId,
+    initialState,
+  );
 
   return (
-    <form action={dispatch}>
+    <form
+      action={dispatch}
+      id="edit-book-transaction-id"
+      name="edit-book-transaction"
+    >
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Student Name */}
         <div className="mb-4">

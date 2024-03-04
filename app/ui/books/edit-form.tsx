@@ -3,15 +3,16 @@
 import { BookFormTable, CategoryForm } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
-  CheckIcon,
-  ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
   DocumentTextIcon,
+  CalendarDaysIcon,
+  RectangleStackIcon,
+  LanguageIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { useFormState } from 'react-dom';
-import { CreateButton } from '../invoices/buttons';
+import { CreateButton } from '../transactions/buttons';
 import { updateBook } from '@/app/lib/books-actions';
 
 export default function EditBookForm({
@@ -27,7 +28,7 @@ export default function EditBookForm({
   const [state, dispatch] = useFormState(updateBookWithId, initialState);
 
   return (
-    <form action={dispatch}>
+    <form action={dispatch} id="edit-book-id" name="edit-book">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Book Title */}
         <div className="mb-4">
@@ -49,7 +50,7 @@ export default function EditBookForm({
                 autoCapitalize="words"
                 defaultValue={book.title}
               />
-              <DocumentTextIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <LanguageIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
             <div id="title-error" aria-live="polite" aria-atomic="true">
               {state.errors?.title &&
@@ -146,7 +147,7 @@ export default function EditBookForm({
                 aria-describedby="publish-date-error"
                 defaultValue={book.publish_date}
               />
-              <DocumentTextIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
             <div id="publish-date-error" aria-live="polite" aria-atomic="true">
               {state.errors?.publish_date &&
@@ -182,14 +183,14 @@ export default function EditBookForm({
                   </option>
                 ))}
               </select>
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              <RectangleStackIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
             <CreateButton
               title="Create Category"
               href="/dashboard/books/category/create"
             />
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
+          <div id="category-error" aria-live="polite" aria-atomic="true">
             {state.errors?.category_id &&
               state.errors.category_id.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>

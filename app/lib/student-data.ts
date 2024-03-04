@@ -1,10 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  BookFormTable,
-  BookTable,
-  CustomerField,
   DepartmentForm,
-  InvoicesTable,
   ProgramForm,
   SemesterForm,
   StudentField,
@@ -131,6 +127,7 @@ export async function fetchStudents() {
       students.id,
       students.name,
       students.fathers_name,
+      students.is_issued,
       departments.title AS department_title,
       programs.title AS program_title,
       semesters.title AS semester_title

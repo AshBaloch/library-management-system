@@ -250,6 +250,6 @@ export async function deleteBook(id: string) {
     revalidatePath('/dashboard/books');
     return { message: 'Deleted Book.' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Book.' };
+    return { message: 'Database Error: Book might be issued to someone.' };
   }
 }

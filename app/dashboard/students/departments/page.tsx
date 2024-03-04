@@ -1,13 +1,12 @@
-import Pagination from '@/app/ui/invoices/pagination';
+import Pagination from '@/app/ui/transactions/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/students/department-table';
-import { CreateButton } from '@/app/ui/invoices/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { CreateButton } from '@/app/ui/transactions/buttons';
+import { TransactionMobileSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { fetchDepartmentsPages } from '@/app/lib/student-data';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Departments',
@@ -45,7 +44,10 @@ export default async function Page({
           href="/dashboard/students/departments/create"
         />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense
+        key={query + currentPage}
+        fallback={<TransactionMobileSkeleton />}
+      >
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">

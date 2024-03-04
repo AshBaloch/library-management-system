@@ -7,15 +7,16 @@ import {
 } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
-  CheckIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
   UserCircleIcon,
   DocumentTextIcon,
+  DevicePhoneMobileIcon,
+  HomeModernIcon,
+  AtSymbolIcon,
+  RectangleStackIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { useFormState } from 'react-dom';
-import { CreateButton } from '../invoices/buttons';
+import { CreateButton } from '../transactions/buttons';
 import { createStudent } from '@/app/lib/students-actions';
 
 export default function Form({
@@ -31,13 +32,11 @@ export default function Form({
 
   const [state, dispatch] = useFormState(createStudent, initialState);
 
-  console.log('state: ', state);
-
   return (
-    <form action={dispatch}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+    <form action={dispatch} id="create-student-id" name="create-student">
+      <div className=" m rounded-md bg-gray-50 p-4 md:flex md:flex-wrap md:p-6">
         {/* Student Name */}
-        <div className="mb-4">
+        <div className=" mb-4 md:mb-6  md:w-1/2 md:pr-3">
           <label
             htmlFor="student_name"
             className="mb-2 block text-sm font-medium"
@@ -55,7 +54,7 @@ export default function Form({
                 aria-describedby="student-name-error"
                 autoCapitalize="words"
               />
-              <DocumentTextIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
             <div id="student-name-error" aria-live="polite" aria-atomic="true">
               {state.errors?.name &&
@@ -69,7 +68,7 @@ export default function Form({
         </div>
 
         {/* Father's Name */}
-        <div className="mb-4">
+        <div className="mb-4 md:mb-6  md:w-1/2 md:pl-3">
           <label
             htmlFor="fathers_name"
             className="mb-2 block text-sm font-medium"
@@ -101,7 +100,7 @@ export default function Form({
         </div>
 
         {/* CNIC No. */}
-        <div className="mb-4">
+        <div className="mb-4 md:mb-6 md:w-1/2 md:pr-3">
           <label htmlFor="cnic_no" className="mb-2 block text-sm font-medium">
             CNIC Number
           </label>
@@ -128,66 +127,8 @@ export default function Form({
           </div>
         </div>
 
-        {/* Email */}
-        <div className="mb-4">
-          <label htmlFor="email" className="mb-2 block text-sm font-medium">
-            Email
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="ayesha@example.com"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="email-error"
-                autoCapitalize="words"
-              />
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
-            <div id="email-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.email &&
-                state.errors.email.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Address */}
-        <div className="mb-4">
-          <label htmlFor="address" className="mb-2 block text-sm font-medium">
-            Address
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="address"
-                name="address"
-                type="text"
-                placeholder="Address"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="address-error"
-                autoCapitalize="words"
-              />
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
-            <div id="address-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.address &&
-                state.errors.address.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
-                ))}
-            </div>
-          </div>
-        </div>
-
         {/* Contact */}
-        <div className="mb-4">
+        <div className="mb-4 md:mb-6 md:w-1/2 md:pl-3">
           <label htmlFor="contact" className="mb-2 block text-sm font-medium">
             Contact
           </label>
@@ -202,7 +143,7 @@ export default function Form({
                 aria-describedby="contact-error"
                 autoCapitalize="words"
               />
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <DevicePhoneMobileIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
             <div id="contact-error" aria-live="polite" aria-atomic="true">
               {state.errors?.contact &&
@@ -215,8 +156,68 @@ export default function Form({
           </div>
         </div>
 
+        {/* Address */}
+        <div className="mb-4 md:mb-6 md:w-1/2 md:pr-3">
+          <label htmlFor="address" className="mb-2 block text-sm font-medium">
+            Address
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="address"
+                name="address"
+                type="text"
+                placeholder="Address"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="address-error"
+                autoCapitalize="words"
+                autoComplete="true"
+              />
+              <HomeModernIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div id="address-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.address &&
+                state.errors.address.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Email */}
+        <div className="mb-4 md:mb-6 md:w-1/2 md:pl-3">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium">
+            Email
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="ayesha@example.com"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="email-error"
+                autoCapitalize="words"
+                autoComplete="true"
+              />
+              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div id="email-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.email &&
+                state.errors.email.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
+          </div>
+        </div>
+
         {/* Gender */}
-        <div className="mb-4 ">
+        <div className="mb-4 md:mb-6 md:w-full">
           <label htmlFor="gender" className="mb-2 block text-sm font-medium">
             Gender
           </label>
@@ -250,7 +251,7 @@ export default function Form({
         </div>
 
         {/* Department */}
-        <div className="mb-4 ">
+        <div className="mb-4 md:mb-6 md:w-full">
           <label
             htmlFor="department"
             className="mb-2 block text-sm font-medium"
@@ -275,7 +276,7 @@ export default function Form({
                   </option>
                 ))}
               </select>
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              <RectangleStackIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
             <CreateButton
               title="Create Department"
@@ -293,7 +294,7 @@ export default function Form({
         </div>
 
         {/* Program */}
-        <div className="mb-4 ">
+        <div className="mb-4 md:w-1/2 md:pr-3">
           <label htmlFor="program" className="mb-2 block text-sm font-medium">
             Choose Program
           </label>
@@ -315,7 +316,7 @@ export default function Form({
                   </option>
                 ))}
               </select>
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              <RectangleStackIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
           </div>
           <div id="program-error" aria-live="polite" aria-atomic="true">
@@ -329,7 +330,7 @@ export default function Form({
         </div>
 
         {/* Semester */}
-        <div className="mb-4 ">
+        <div className="mb-4  md:w-1/2 md:pl-3">
           <label htmlFor="semester" className="mb-2 block text-sm font-medium">
             Choose Semester
           </label>
@@ -351,7 +352,7 @@ export default function Form({
                   </option>
                 ))}
               </select>
-              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              <RectangleStackIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
           </div>
           <div id="semester-error" aria-live="polite" aria-atomic="true">

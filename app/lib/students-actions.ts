@@ -97,7 +97,10 @@ export async function deleteDepartment(id: string) {
     revalidatePath('/dashboard/students/departments');
     return { message: 'Deleted Department.' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Department.' };
+    return {
+      message:
+        'Database Error: Failed to Delete Department.\nThis department has students linked to it.',
+    };
   }
 }
 
@@ -294,6 +297,8 @@ export async function deleteStudent(id: string) {
     revalidatePath('/dashboard/students');
     return { message: 'Deleted Student.' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Student.' };
+    return {
+      message: 'Failed to Delete Student.\nStudent may have a book history.',
+    };
   }
 }

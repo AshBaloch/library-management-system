@@ -1,5 +1,5 @@
 import Form from '@/app/ui/students/edit-department-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { fetchDepartmentById } from '@/app/lib/student-data';

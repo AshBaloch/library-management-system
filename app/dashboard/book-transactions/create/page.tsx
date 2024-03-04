@@ -1,6 +1,5 @@
-import Form from '@/app/ui/invoices/create-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+import Form from '@/app/ui/transactions/create-form';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 import { Metadata } from 'next';
 import { fetchStudents } from '@/app/lib/student-data';
 import { fetchBooks } from '@/app/lib/book-data';

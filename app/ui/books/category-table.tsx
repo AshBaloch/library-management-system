@@ -1,10 +1,5 @@
-import Image from 'next/image';
-import { UpdateButton, DeleteContent } from '@/app/ui/invoices/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import {
-  fetchFilteredBooks,
-  fetchFilteredCategories,
-} from '@/app/lib/book-data';
+import { UpdateButton, DeleteContent } from '@/app/ui/transactions/buttons';
+import { fetchFilteredCategories } from '@/app/lib/book-data';
 import { deleteCategory } from '@/app/lib/books-actions';
 
 export default async function CategoriesTable({
@@ -21,11 +16,8 @@ export default async function CategoriesTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div>
-            {categories?.map((category) => (
-              <div
-                key={category.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
+            {categories?.map((category, index) => (
+              <div key={index} className="mb-2 w-full rounded-md bg-white p-4">
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-lg font-medium">

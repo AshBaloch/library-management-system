@@ -1,6 +1,6 @@
 'use client';
 
-import { CategoryForm, CustomerField } from '@/app/lib/definitions';
+import { CategoryForm } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
@@ -14,7 +14,11 @@ export default function Form({ category }: { category: CategoryForm }) {
   const [state, dispatch] = useFormState(updateCategoryWithId, initialState);
 
   return (
-    <form action={dispatch}>
+    <form
+      action={dispatch}
+      id="edit-category-form-id"
+      name="edit-category-form"
+    >
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Category Title */}
         <div className="mb-4">

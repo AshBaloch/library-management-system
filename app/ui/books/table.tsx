@@ -1,6 +1,5 @@
-import Image from 'next/image';
-import { UpdateButton, DeleteContent } from '@/app/ui/invoices/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { UpdateButton, DeleteContent } from '@/app/ui/transactions/buttons';
+import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredBooks } from '@/app/lib/book-data';
 import { deleteBook } from '@/app/lib/books-actions';
 
@@ -34,7 +33,9 @@ export default async function BooksTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className="text-xl font-medium">{book.total_quantity}</p>
+                    <p className="text-xl font-medium">
+                      {book.available_quantity}
+                    </p>
                     <p>{formatDateToLocal(book.publish_date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
@@ -57,7 +58,7 @@ export default async function BooksTable({
                   Author
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Quantity
+                  Available
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Publish Date
@@ -83,7 +84,7 @@ export default async function BooksTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">{book.author}</td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {book.total_quantity}
+                    {book.available_quantity}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(book.publish_date)}

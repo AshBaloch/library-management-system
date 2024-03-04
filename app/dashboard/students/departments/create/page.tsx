@@ -1,5 +1,5 @@
 import Form from '@/app/ui/students/create-department-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
